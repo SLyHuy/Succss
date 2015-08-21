@@ -504,7 +504,7 @@ function Succss() {
           captureState.before.call(casperInstance, siblings);
         }
       }, function() {
-        self.echo('Selector "' + captureState.selector + '" was not found anywhere on the page.', 'ERROR');
+        self.echo('Selector "' + captureState.selector + '" was not found anywhere on the page. Hahaha', 'ERROR');
       });
     });
 
