@@ -85,4 +85,5 @@ if slimerjsCheck:
   else:
     print('An exception was thrown, try running succss with the default engine.')
 
+# allArgs.append('--web-security=no');
 call(allArgs)

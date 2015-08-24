@@ -1,8 +1,8 @@
 {
   "name": "succss",
-  "version": "1.7.2",
+  "version": "1.8",
   "description": "Succss is a command line tool built to find image-based differences between website updates.",
-  "author": "B2F <d4rb2f@gmail.com>",
+  "author": "Huy Ly <s.lyhuy@gmail.com>",
   "bin": {
     "succss": "./bin/succss.py"
   },
@@ -12,10 +12,10 @@
   "main": "succss.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/B2F/Succss"
+    "url": "https://github.com/SLyHuy/Succss"
   },
   "bugs": {
-    "url": "https://github.com/B2F/Succss/issues"
+    "url": "https://github.com/SLyHuy/Succss/issues"
   },
   "keywords": [
     "css",
