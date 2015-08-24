@@ -107,7 +107,7 @@ function Succss() {
 
 		// Default filenaming for captured screenshot files:
 		if (!self.setFileName) self.setFileName = function(captureState) {
-			return captureState.page.name + '--' + captureState.name + '--' + captureState.viewport.width + 'x' + captureState.viewport.height + '.png';
+			return /*captureState.page.name + '--' +*/ captureState.name + '--' + captureState.viewport.width + 'x' + captureState.viewport.height + '.png';
 		};
 
 		// Directory path used as reference prefix when checking for differences.
@@ -409,6 +409,10 @@ function Succss() {
 							if (!options.checkDir && !options.keepTmp) {
 								fs.removeTree(checkDir);
 							}
+							console.log('Open report');
+							openReport();
+
+							casperInstance.wait(1000000);
 						}
 					}
 				}
@@ -532,12 +536,15 @@ function Succss() {
 		// Processing the 'hidden' capture property:
 		if (captureState.hidden) {
 			var selectors = captureState.hidden;
-			casperInstance.thenEvaluate(function(selectors) {
-				var elements = document.querySelectorAll(selectors);
-				for (var e in elements) {
-					elements[e].style.visibility = 'hidden';
-				}
-			}, { selectors:selectors })
+			casperInstance.waitForSelector(selectors, function(){
+				casperInstance.thenEvaluate(function(selectors) {
+					var elements = document.querySelectorAll(selectors);
+					for (var e in elements) {
+						elements[e].style.visibility = 'hidden';
+					}
+				}, { selectors:selectors })
+			});
+			
 		};
 
 		var imgOptions = {
@@ -750,3 +757,31 @@ function Succss() {
 function cleanPreprendPath(prefix, suffix) {
 	return prefix.replace(/\/$/, '') + '/' + suffix.replace(/^(\.\/|\/)/, '');
 }
+
+
+function openReport(){
+
+	var server = require('webserver').create();
+
+	console.log('oke');
+
+	//app.use(express.static('report'));
+	var port = 3000;
+
+	server.listen(port, {
+		'keepAlive': true
+	}, function(request, response) {
+		console.log('Report server listening at http://localhost:%s', port);
+		console.log(JSON.stringify(request));
+
+		
+		response.statusCod = 200;
+		response.write('<html><body>Hello! 123</body></html>');
+		response.close();
+		
+	});
+	
+}
+
+
+

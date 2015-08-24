@@ -4,6 +4,7 @@
  * Bridge bewteen succss commandline, casperjs and succss.js
  *
  */
+
 try {
 
   // Initialisation:

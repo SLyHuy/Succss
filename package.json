@@ -1,6 +1,6 @@
 {
   "name": "succss",
-  "version": "1.8",
+  "version": "1.7.2",
   "description": "Succss is a command line tool built to find image-based differences between website updates.",
   "author": "Huy Ly <s.lyhuy@gmail.com>",
   "bin": {
@@ -25,7 +25,8 @@
     "capture"
   ],
   "dependencies": {
-    "casperjs": "1.1.0-beta3"
+    "casperjs": "1.1.0-beta3",
+    "express": "^4.13.3"
   },
   "preferGlobal": true,
   "private": false,
