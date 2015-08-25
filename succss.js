@@ -21,6 +21,11 @@ SuccssCount = {
 	startDate:null,
 };
 
+var resultData = {
+	passed: [],
+	failed: []
+};
+
 function Succss() {
 
 	/*
@@ -409,10 +414,10 @@ function Succss() {
 							if (!options.checkDir && !options.keepTmp) {
 								fs.removeTree(checkDir);
 							}
-							console.log('Open report');
-							openReport();
 
-							casperInstance.wait(1000000);
+							casperInstance.then(function(){
+								openReport();
+							})
 						}
 					}
 				}
@@ -603,7 +608,38 @@ function Succss() {
 			var filePath = './imagediff/' + self.defaultDiffDirName(capture);
 			var imgDiff = imagediff.diff(imgBase, imgCheck, imagediffOptions);
 			self.writeImgDiff(imgDiff, imgBase, imgCheck, filePath);
+
+			var resultPath = 'imagediff/' + self.defaultDiffDirName(capture);
+
+			resultData.failed.push({
+				name: capture.name,
+				selector: capture.selector,
+				basePath: capture.basePath,
+				filePath: resultPath,
+				page: {
+					url: capture.page.url,
+					name: capture.page.name
+				},
+				viewport: capture.viewport,
+				passed: false
+			});
 		}
+		else{
+			resultData.passed.push({
+				name: capture.name,
+				selector: capture.selector,
+				basePath: capture.basePath,
+				page: {
+					url: capture.page.url,
+					name: capture.page.name
+				},
+				viewport: capture.viewport,
+				passed: true
+			});
+		}
+
+		//console.log(JSON.stringify(capture));
+
 		casper.test.assertTrue(imagesMatch, 'Capture matches base screenshot (imagediff).');
 	}
 
@@ -709,13 +745,13 @@ function Succss() {
 	 * @returns {String} The default path for writing diff images.
 	 */
 	self.defaultDiffDirName = function(capture) {
-		return SuccssCount.startDate.getFullYear() + '-' +
-						(SuccssCount.startDate.getMonth() + 1) + '-' +
-						SuccssCount.startDate.getDate() + '--' +
-						SuccssCount.startDate.getHours() + '-' +
-						SuccssCount.startDate.getMinutes() + '-' +
-						SuccssCount.startDate.getSeconds() +
-						'/' + capture.page.name + '--' + capture.viewport.name +
+		//return SuccssCount.startDate.getFullYear() + '-' +
+						// (SuccssCount.startDate.getMonth() + 1) + '-' +
+						// SuccssCount.startDate.getDate() + '--' +
+						// SuccssCount.startDate.getHours() + '-' +
+						// SuccssCount.startDate.getMinutes() + '-' +
+						// SuccssCount.startDate.getSeconds() +
+		return			capture.page.name + '--' + capture.viewport.name +
 						'/' + capture.basePath.replace(/^\.?\//, '').replace(checkDir+'/', '');
 	}
 
@@ -760,26 +796,37 @@ function cleanPreprendPath(prefix, suffix) {
 
 
 function openReport(){
+	var fs = require('fs');
 
-	var server = require('webserver').create();
+	resultData.time =  (new Date()) - SuccssCount.startTime;
 
-	console.log('oke');
+	var jsonStr = JSON.stringify(resultData);
 
-	//app.use(express.static('report'));
-	var port = 3000;
+	fs.write('report/config.json', jsonStr, 'w');
 
-	server.listen(port, {
-		'keepAlive': true
-	}, function(request, response) {
-		console.log('Report server listening at http://localhost:%s', port);
-		console.log(JSON.stringify(request));
+	// var process = require("child_process");
+
+	// process.execFile('report.js', [], null, function (err, stdout, stderr){
+	// 	console.log('Run report.js successfully');
+	// });
+
+	// var server = require('webserver').create();
+
+	// console.log('oke');
+	// var port = 3000;
+
+	// server.listen(port, {
+	// 	'keepAlive': true
+	// }, function(request, response) {
+	// 	console.log('Report server listening at http://localhost:%s', port);
+	// 	console.log(JSON.stringify(request));
 
 		
-		response.statusCod = 200;
-		response.write('<html><body>Hello! 123</body></html>');
-		response.close();
+	// 	response.statusCod = 200;
+	// 	response.write('<html><body>Hello! 123</body></html>');
+	// 	response.close();
 		
-	});
+	// });
 	
 }
 
