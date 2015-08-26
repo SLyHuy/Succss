@@ -199,7 +199,6 @@ function Succss() {
 
 			if (data[page].captures == undefined || !Object.keys(data[page].captures).length) {
 				data[page].captures = {
-					'body':''
 				}
 			}
 
@@ -449,11 +448,12 @@ function Succss() {
 				SuccssCount.planned += data[p].captureKeys.length*viewports.length;
 				SuccssCount.remaining = SuccssCount.planned;
 
+				phantom.clearCookies();
+				casperInstance.page.settings.webSecurityEnabled = false;
+
 				casperInstance.thenOpen(data[p].url, function(){
 
 					self.echo('> Opening ' + data[p].url, 'INFO');
-
-					phantom.clearCookies();
 
 					// Processing the 'hidden':
 					if (data[p].hidden) {
@@ -659,7 +659,7 @@ function Succss() {
 		//console.log(JSON.stringify(capture));
 
 		casper.test.assertTrue(imagesMatch, 'Capture matches base screenshot (imagediff).');
-	}
+	};
 
 	/**
 	 * Succss bundled diffing implementation of resemblejs
@@ -691,9 +691,9 @@ function Succss() {
 				catch (e) {
 					self.catchErrors(e);
 				}
-			}
+			};
 		});
-	}
+	};
 
 	/**
 	 * Writes an image to a HTML5 Canvas, assembled from images differences (imgDiff) between the original and updated images,

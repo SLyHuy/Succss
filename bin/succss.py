@@ -85,5 +85,6 @@ if slimerjsCheck:
   else:
     print('An exception was thrown, try running succss with the default engine.')
 
-# allArgs.append('--web-security=no');
+allArgs.append('--web-security=no');
+allArgs.append('--local-to-remote-url-access=no');
 call(allArgs)
