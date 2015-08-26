@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>CSS Regression Report</title>
+
+	<link rel="stylesheet" type="text/css" href="lib/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/styles.css">
+
+	<script type="text/javascript" src="lib/angular/angular.min.js"></script>
+	<script type="text/javascript" src="lib/angular-route/angular-route.min.js"></script>
+	<script type="text/javascript" src="lib/async/lib/async.js"></script>
+
+	<script type="text/javascript" src="js/compare.js"></script>
+</head>
+
+<body ng-app="compareApp">
+	<div id="root" ng-controller="MainCtrl">
+		<div class="container"><h1>CSS Regression Report</h1></div>
+		<div class="container summaryBlock">
+			<h2 class='lead'>
+				<div class="stat">Passed <strong class='green circle'>{{data.passed.length}}</strong>&nbsp;&nbsp; Failed <strong class='red circle'>{{data.failed.length}}</strong></div>
+				<div class="stat">{{data.passed.length}} of {{data.passed.length + data.failed.length}} ({{data.passed.length/(data.passed.length + data.failed.length) * 100 | number : 0}}%)</div>
+				<div class="stat">{{data.time/1000 | number : 2}}s</div>
+				<!-- <div class="progressBarBlock" ng-if="testIsRunning">
+					<div class="progress">
+					  <div class="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow="{{testPairsCompleted}}" aria-valuemin="0" aria-valuemax="{{testPairs.length}}" style="width: {{testPairsCompleted/testPairs.length*100| number : 0}}%">
+					    <span class="sr-only">{{testPairsCompleted}} of {{testPairs.length}}</span>
+					  </div>
+					</div>
+				</div> -->
+			</h2>
+			<table class="summaryList">
+				<tr ng-repeat="eFail in data.failed">
+					<td class="statusInds">
+						<div class="indicator scanning" ng-if="thisTestPair.processing"><span class="dot yellow flash"></span>scanning</div>
+						<div class="indicator failed" ng-if="!eFail.passed"><span class="dot red"></span>failed</div>
+						<div class="indicator passed" ng-if="eFail.passed"><span class="dot green"></span>passed</div>
+					</td>
+					<td>
+						{{eFail.page.name}}: {{ eFail.name }} - {{ eFail.selector }} - {{eFail.viewport.name}} <span class="fileName">{{ eFail.filePath }}</span>
+					</td>
+				</tr>
+				<tr ng-repeat="ePass in data.passed">
+					<td class="statusInds">
+						<div class="indicator scanning" ng-if="test.processing"><span class="dot yellow flash"></span>scanning</div>
+						<div class="indicator passed" ng-if="ePass.passed"><span class="dot green"></span>passed</div>
+					</td>
+					<td>
+						{{ePass.page.name}}: {{ ePass.name }} - {{ ePass.selector }} - {{ePass.viewport.name}} <span class="fileName">{{ ePass.basePath }}</span>
+					</td>
+				</tr>
+			</table>
+		</div> <!-- end summaryBlock -->
+
+		<div class="detailReport">
+
+			<div class='filterGroup form-group'>
+				<label for="statusFilter" class="control-label">status filter</label>
+				<select id="statusFilter" class="form-control" ng-model="statusFilter" ng-options="status for status in detailFilterOptions"></select>
+
+			</div>
+
+			<table ng-repeat="test in allTest | filter : displayOnStatusFilter ">
+				<thead>
+					<tr>
+						<th class="selector" colspan="2">{{test.page.name}}: {{ test.name }} - {{ test.selector }} - {{test.viewport.name}}</th>
+					</tr>
+					<tr>
+						<th class="th1">Image</th>
+						<th class="th2">Report</th>
+					</tr>
+				</thead>
+				<tr>
+					<td>
+						<img ng-src="{{ test.filePath || test.basePath }}">
+					</td>
+					<td>
+						<div class="statusInds">
+							<div class="indicator scanning" ng-if="test.processing"><span class="dot yellow flash"></span>scanning</div>
+							<div class="indicator failed" ng-if="!test.passed"><span class="dot red"></span>failed</div>
+							<div class="indicator passed" ng-if="test.passed"><span class="dot green"></span>passed</div>
+						</div>
+						<div class="reportTxt">Page: {{test.page.name}} - {{test.page.url}}</div>
+						<div class="reportTxt">Selector: {{ test.selector}}</div>
+						<div class="reportTxt">Viewport: {{ test.viewport.name }}: {{test.viewport.width}}x{{test.viewport.height}}</div>
+					</td>
+				</tr>
+			</table>
+
+
+		</div> <!-- end detailReport -->
+
+
+	<footer></footer>
+
+
+	</div> <!-- end #root -->
+
+</body>
+</html>

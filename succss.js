@@ -453,6 +453,8 @@ function Succss() {
 
 					self.echo('> Opening ' + data[p].url, 'INFO');
 
+					phantom.clearCookies();
+
 					// Processing the 'hidden':
 					if (data[p].hidden) {
 						var selectors = data[p].hidden;
@@ -460,7 +462,6 @@ function Succss() {
 						casperInstance.waitForSelector(selectors, function(){
 							self.echo('> Found hidden elements: ' + selectors, 'PARAMETER');
 							var result = casperInstance.evaluate(function(selectors) {
-								console.log('1213');
 								if (jQuery){
 									jQuery(selectors).css({
 										visibility: 'hidden'
