@@ -453,6 +453,36 @@ function Succss() {
 
 					self.echo('> Opening ' + data[p].url, 'INFO');
 
+					// Processing the 'hidden':
+					if (data[p].hidden) {
+						var selectors = data[p].hidden;
+
+						casperInstance.waitForSelector(selectors, function(){
+							self.echo('> Found hidden elements: ' + selectors, 'PARAMETER');
+							var result = casperInstance.evaluate(function(selectors) {
+								console.log('1213');
+								if (jQuery){
+									jQuery(selectors).css({
+										visibility: 'hidden'
+									});
+									return 1;
+								}
+								else{
+									var elements = document.querySelectorAll(selectors);
+									for (var e in elements) {
+										elements[e].style.visibility = 'hidden';
+									}
+									return 2;
+								}
+								return 3;
+								
+							}, selectors);
+							self.echo('Result hide hidden elements: ' + result, 'PARAMETER');
+							casperInstance.wait(400);
+						});
+						
+					};
+
 					casperInstance.eachThen(data[p].captureKeys, function(response) {
 						var casperInstance = this;
 						var c = response.data;
@@ -538,19 +568,6 @@ function Succss() {
 			});
 		}, 0);
 
-		// Processing the 'hidden' capture property:
-		if (captureState.hidden) {
-			var selectors = captureState.hidden;
-			casperInstance.waitForSelector(selectors, function(){
-				casperInstance.thenEvaluate(function(selectors) {
-					var elements = document.querySelectorAll(selectors);
-					for (var e in elements) {
-						elements[e].style.visibility = 'hidden';
-					}
-				}, { selectors:selectors })
-			});
-			
-		};
 
 		var imgOptions = {
 			format: captureState.options.imgType,
