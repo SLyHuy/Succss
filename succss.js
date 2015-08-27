@@ -94,6 +94,7 @@ function Succss() {
 			if (typeof data[pageName].captures[captureIndex] != 'object') throw('Capture "' + captureIndex + '" is missing from your configuration page named "' + pageName +'"/ Your captures must be present on both sides when compareToPage is used.');
 			// Available in setFileName:
 			var captureState = data[pageName].captures[captureIndex];
+
 			captureState.page = {};
 			for (var prop in data[pageName]) {
 				if (prop != 'captures') {
@@ -438,10 +439,19 @@ function Succss() {
 
 		casperInstance.start('about:blank', function() {
 
+			casperInstance.page.settings.webSecurityEnabled = false;
+			casperInstance.page.settings.localToRemoteUrlAccessEnabled = true;
+
 			SuccssCount.startDate = new Date();
 			SuccssCount.startTime = SuccssCount.startDate.getTime();
 
-			casperInstance.each(pages, function(casperInstance, p) {
+			casperInstance.eachThen(pages, function(response){
+				var casperInstance = this;
+				var p = response.data;
+
+				if (data[p].captureKeys.length == 0){
+					return;
+				}
 
 				self.echo('\nFound "' + p + '" page configuration.', 'INFO');
 
@@ -449,7 +459,7 @@ function Succss() {
 				SuccssCount.remaining = SuccssCount.planned;
 
 				phantom.clearCookies();
-				casperInstance.page.settings.webSecurityEnabled = false;
+				
 
 				casperInstance.thenOpen(data[p].url, function(){
 
@@ -484,10 +494,14 @@ function Succss() {
 						
 					};
 
+					//Process beforeTest
+					if (data[p].beforeTest){
+						data[p].beforeTest.call(casperInstance);
+					}
+
 					casperInstance.eachThen(data[p].captureKeys, function(response) {
 						var casperInstance = this;
 						var c = response.data;
-
 
 						casperInstance.eachThen(viewports, function(response) {
 							var casperInstance = this;
