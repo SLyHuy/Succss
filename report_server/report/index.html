@@ -46,7 +46,7 @@
 						<div class="indicator passed" ng-if="ePass.passed"><span class="dot green"></span>passed</div>
 					</td>
 					<td>
-						{{ePass.page.name}}: {{ ePass.name }} - {{ ePass.selector }} - {{ePass.viewport.name}} <span class="fileName">{{ ePass.basePath }}</span>
+						{{ePass.page.name}}: "{{ ePass.name }}" - "{{ ePass.selector }}"" - {{ePass.viewport.name}} <span class="fileName">{{ ePass.basePath }}</span>
 					</td>
 				</tr>
 			</table>
@@ -81,6 +81,7 @@
 							<div class="indicator passed" ng-if="test.passed"><span class="dot green"></span>passed</div>
 						</div>
 						<div class="reportTxt">Page: {{test.page.name}} - {{test.page.url}}</div>
+						<div class="reportTxt">Name: {{ test.name}}</div>
 						<div class="reportTxt">Selector: {{ test.selector}}</div>
 						<div class="reportTxt">Viewport: {{ test.viewport.name }}: {{test.viewport.width}}x{{test.viewport.height}}</div>
 					</td>
@@ -91,7 +92,7 @@
 		</div> <!-- end detailReport -->
 
 
-	<footer></footer>
+	<footer><p>Template from <a href="https://github.com/garris/BackstopJS" target="_blank">BackStopJS</a></p></footer>
 
 
 	</div> <!-- end #root -->

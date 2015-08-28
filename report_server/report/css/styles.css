@@ -1,5 +1,5 @@
 body{font-family: HelveticaNeue,Arial}
-footer{margin-bottom: 200px;}
+footer{margin-bottom: 50px; text-align: center;}
 label span{display: block;}
 td,th{vertical-align: top;padding: 8px;}
 th.th1{
@@ -22,7 +22,7 @@ th.filename{text-align: right;}
 .summaryList{padding: 0px;list-style: none;width: auto;}
 .summaryList td{width: auto; padding: 5px;}
 .summaryList tr:nth-child(2n-1){background-color: #f0f0f0;}
-.detailReport{ margin:50px 10px 10px;}
+.detailReport{ margin: 50px 10px 200px 10px;}
 .detailReport select{display: inline-block;width: auto;}
 .summaryBlock .fileName{font-style: italic;font-weight: 100;color: #999;}
 

@@ -267,7 +267,7 @@ function Succss() {
 	 */
 	casperInstance.on('run.complete', function(data) {
 		if (SuccssCount.failures) {
-			self.echo('Tests failed with ' + SuccssCount.failures + ' errors.', 'ERROR');
+			self.echo('Tests failed with ' + SuccssCount.failures + ' errors of ' + SuccssCount.planned + ' cases', 'ERROR');
 		}
 		else {
 			self.echo('[SUCCSS] All captures (' + SuccssCount.planned + ') tests pass!', 'GREEN_BAR');
@@ -416,8 +416,12 @@ function Succss() {
 							}
 
 							casperInstance.then(function(){
+								console.log('Start saving report.');
 								openReport();
-							})
+
+								casperInstance.wait(5000);
+							});
+							
 						}
 					}
 				}
@@ -436,6 +440,15 @@ function Succss() {
 	 * @returns casperInstance.run()
 	 */
 	self.parseData = function(command) {
+
+		var countR = 0;
+		for (var p in pages){
+			countR += data[pages[p]].captureKeys.length * viewports.length;
+		}
+
+		SuccssCount.remaining = countR;
+
+		self.echo('Remaining test case: ' + SuccssCount.remaining, 'INFO');
 
 		casperInstance.start('about:blank', function() {
 
@@ -456,7 +469,7 @@ function Succss() {
 				self.echo('\nFound "' + p + '" page configuration.', 'INFO');
 
 				SuccssCount.planned += data[p].captureKeys.length*viewports.length;
-				SuccssCount.remaining = SuccssCount.planned;
+				
 
 				phantom.clearCookies();
 				
@@ -835,6 +848,8 @@ function openReport(){
 	var jsonStr = JSON.stringify(resultData);
 
 	fs.write('report/config.json', jsonStr, 'w');
+
+	console.log('Save report completed!');
 
 	// var process = require("child_process");
 
