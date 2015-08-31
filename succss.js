@@ -503,6 +503,8 @@ function Succss() {
 							}, selectors);
 							self.echo('Result hide hidden elements: ' + result, 'PARAMETER');
 							casperInstance.wait(400);
+						}, function(){
+							console.log('Not found hidden. Skip!!');
 						});
 						
 					};
@@ -712,6 +714,36 @@ function Succss() {
 					if (!imagesMatch) {
 						var filePath = './resemble/' + self.defaultDiffDirName(capture);
 						self.writeImgDiff(imgDiff, imgBase, imgCheck, filePath);
+
+						var resultPath = 'resemble/' + self.defaultDiffDirName(capture);
+
+						resultData.failed.push({
+							name: capture.name,
+							selector: capture.selector,
+							basePath: capture.basePath,
+							filePath: resultPath,
+							misMatchPercentage: data.misMatchPercentage,
+							isSameDimensions: data.isSameDimensions,
+							page: {
+								url: capture.page.url,
+								name: capture.page.name
+							},
+							viewport: capture.viewport,
+							passed: false
+						});
+					}
+					else{
+						resultData.passed.push({
+							name: capture.name,
+							selector: capture.selector,
+							basePath: capture.basePath,
+							page: {
+								url: capture.page.url,
+								name: capture.page.name
+							},
+							viewport: capture.viewport,
+							passed: true
+						});
 					}
 					casper.test.assertTrue(imagesMatch, 'Capture matches base screenshot (resemble).');
 				}
