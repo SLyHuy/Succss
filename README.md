@@ -22,6 +22,8 @@ After you change something in js/css code and complete your task. Let tun test a
 
 If you want see a visual report:
 
+Copy `report.js` and `report folder` inside `/report_server` to your folder have file `your-test.js` and run command:
+
 #####```$ node report.js -t 60```
 
 `-t 60` is time of server will alive in 60 mins. Default is 15 mins. After this time, server will automating shutdown. But you can start it again, it's not delete last checking data.
