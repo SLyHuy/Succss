@@ -511,7 +511,7 @@ function Succss() {
 
 					//Process beforeTest
 					if (data[p].beforeTest){
-						data[p].beforeTest.call(casperInstance);
+						data[p].beforeTest.call(casperInstance, data[p].url);
 					}
 
 					casperInstance.eachThen(data[p].captureKeys, function(response) {

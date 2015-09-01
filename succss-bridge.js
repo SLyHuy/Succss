@@ -43,7 +43,7 @@ try {
     case 'help':
 
       Succss.echo('Capture base screenshots of successful CSS designs.', 'INFO');
-      Succss.echo('succss {{add | check} FILE.js} | help } [--pages=p1,p2,p3...] [--captures=c1,c2,c3...] [--viewports=v1,v2,v3...] [--compareToPage=cN] [--compareToViewport=vN] [--rmtree]', 'COMMENT');
+      Succss.echo('rockcss {{add | check} FILE.js} | help } [--pages=p1,p2,p3...] [--captures=c1,c2,c3...] [--viewports=v1,v2,v3...] [--compareToPage=cN] [--compareToViewport=vN] [--rmtree]', 'COMMENT');
       Succss.echo('--pages: filter captures by pages.', 'PARAMETER');
       Succss.echo('--captures: filter captures by selectors.', 'PARAMETER');
       Succss.echo('--viewports: filter captures by viewports.', 'PARAMETER');
@@ -51,7 +51,6 @@ try {
       Succss.echo('@see http://succss.ifzenelse.net', 'INFO_BAR');
       casper.exit();
       break;
-
     case 'list':
     case 'add':
     case 'check':

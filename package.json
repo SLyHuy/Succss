@@ -1,10 +1,10 @@
 {
-  "name": "succss",
-  "version": "1.7.2",
-  "description": "Succss is a command line tool built to find image-based differences between website updates.",
+  "name": "rockcss",
+  "version": "1.0.6",
+  "description": "Rockcss is a command line tool built to find image-based differences between website updates. Base on Succss.",
   "author": "Huy Ly <s.lyhuy@gmail.com>",
   "bin": {
-    "succss": "./bin/succss.py"
+    "rockcss": "./bin/succss.py"
   },
   "scripts": {
     "test": "./selftests/test.sh"
@@ -25,8 +25,10 @@
     "capture"
   ],
   "dependencies": {
-    "casperjs": "1.1.0-beta3",
-    "express": "^4.13.3"
+    "casperjs": "^1.1.0-beta3",
+    "express": "^4.13.3",
+    "phantomjs": "^1.9.18",
+    "slimerjs": "^0.9.6"
   },
   "preferGlobal": true,
   "private": false,
