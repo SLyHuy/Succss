@@ -3,7 +3,7 @@
 Customized & optimized from SUCCSS (Find more: http://succss.ifzenelse.net)
 
 ###Install
-######```$ sudo npm install -g rockcss```
+#####```$ sudo npm install -g rockcss```
 
 ###Support
 1. Flow testing.
@@ -14,15 +14,15 @@ Customized & optimized from SUCCSS (Find more: http://succss.ifzenelse.net)
 ###How to use?
 Add reference screenshots
 
-######```$ rockcss add your-test.js```
+#####```$ rockcss add your-test.js```
 
 After you change something in js/css code and complete your task. Let tun test again and check:
 
-######```$ rockcss check your-test.js```
+#####```$ rockcss check your-test.js```
 
 If you want see a visual report:
 
-######```$ node report.js -t 60```
+#####```$ node report.js -t 60```
 
 `-t 60` is time of server will alive in 60 mins. Default is 15 mins. After this time, server will automating shutdown. But you can start it again, it's not delete last checking data.
 
@@ -91,7 +91,8 @@ Succss.pages = {
                     });
                     me.wait(100);
 
-                    me.sendKeys('#EmailLoginForm_email', Config.emailLogin);
+                    me.sendKeys('#EmailLoginForm_email', Config.emailLogin); // Fill your email address to login
+                    me.sendKeys('#EmailLoginForm_email', Config.passwordLogin); // Fill your password to login
 
                     me.click('button.submit_btn.login_btn');
                     me.wait(5000);
