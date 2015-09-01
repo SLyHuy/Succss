@@ -122,5 +122,5 @@ Succss.pages = {
 - Imagediff
 - ResembleJS
 - MIT Licenses
-- Thanks to them !
+- Thanks to them!
 
