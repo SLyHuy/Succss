@@ -94,7 +94,7 @@ Succss.pages = {
                     me.wait(100);
 
                     me.sendKeys('#EmailLoginForm_email', Config.emailLogin); // Fill your email address to login
-                    me.sendKeys('#EmailLoginForm_email', Config.passwordLogin); // Fill your password to login
+                    me.sendKeys('#EmailLoginForm_password', Config.passwordLogin); // Fill your password to login
 
                     me.click('button.submit_btn.login_btn');
                     me.wait(5000);
