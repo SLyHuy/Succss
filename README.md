@@ -123,6 +123,9 @@ Succss.pages = {
 - CasperJS
 - Imagediff
 - ResembleJS
+- PhantomJS
+- NodeJS
+- Express
 - MIT Licenses
 - Thanks to them!
 
