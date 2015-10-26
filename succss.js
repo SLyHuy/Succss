@@ -25,6 +25,7 @@ var resultData = {
 	passed: [],
 	failed: []
 };
+var savingReport = false;
 
 function Succss() {
 
@@ -410,20 +411,25 @@ function Succss() {
 								self.catchErrors(e);
 							}
 						});
+						/****** Saving Report *******/
 						if (!SuccssCount.remaining) {
 							if (!options.checkDir && !options.keepTmp) {
 								fs.removeTree(checkDir);
 							}
 
-							casperInstance.then(function(){
-								console.log('Start saving report.');
-								openReport();
+							if (!savingReport) {
+								savingReport = true;
+								casperInstance.then(function(){
+									console.log('Start saving report.');
+									openReport();
 
-								casperInstance.wait(5000);
-							});
-							
+									casperInstance.wait(5000);
+								});
+							}
 						}
+						/***** End Saving Report ******/
 					}
+					
 				}
 			});
 		}
@@ -537,6 +543,25 @@ function Succss() {
 
 									// Throw on Client (4xx) or Server (5xx) errors.
 									if (typeof casperInstance.currentHTTPStatus !== 'number' || casperInstance.currentHTTPStatus > 400) {
+
+										/****** Saving Report *******/
+										if (!SuccssCount.remaining) {
+											if (!options.checkDir && !options.keepTmp) {
+												fs.removeTree(checkDir);
+											}
+
+											if (!savingReport) {
+												savingReport = true;
+												casperInstance.then(function(){
+													console.log('Start saving report.');
+													openReport();
+
+													casperInstance.wait(5000);
+												});
+											}
+										}
+										/***** End Saving Report ******/
+										
 										switch (casperInstance.currentHTTPStatus) {
 											case null:
 												throw "[SucCSS] Can't access " + capture.page.url + ". Check the website url and your internet connexion.";
@@ -544,6 +569,7 @@ function Succss() {
 											default:
 												throw "[SucCSS] Response code for " + capture.page.url + " was " + casperInstance.currentHTTPStatus;
 										}
+
 									}
 
 									command(capture);

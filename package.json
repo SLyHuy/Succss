@@ -1,6 +1,6 @@
 {
   "name": "rockcss",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Rockcss is a command line tool built to find image-based differences between website updates. Base on Succss.",
   "author": "Huy Ly <s.lyhuy@gmail.com>",
   "bin": {
